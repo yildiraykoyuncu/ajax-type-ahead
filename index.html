@@ -2,27 +2,34 @@
 <html lang='en'>
 
 <head>
-  <meta charset='utf8'>
-  <title>your project name</title>
+    <meta charset='utf8'>
+    <title>your project name</title>
 
-  <link href="./style.css" rel="stylesheet" />
+    <link href="./style.css" rel="stylesheet" />
 
-  <!-- load the testing dependencies -->
-  <script src='./dependencies/chai.js'></script>
-  <script src='./dependencies/describe-it.js'></script>
+    <!-- load the testing dependencies -->
+    <script src='./dependencies/chai.js'></script>
+    <script src='./dependencies/describe-it.js'></script>
 
-  <!-- load the rest of your files -->
-
+    <!-- load the rest of your files -->
+    <script src="./scripts/logic/logic.js"></script>
+    <script src="./scripts/handlers/handlers.js"></script>
 
 </head>
 
 <body>
+    <form class="search-form">
+        <input type="text" class="search" placeholder="city or state">
+        <ul class="suggestions">
+            <li>filter a city</li>
+            <li>or a state</li>
+        </ul>
+    </form>
 
-
-
-  <!-- Leave this here, it renders the review buttons
+    <!-- Leave this here, it renders the review buttons
       write your code above this script tag  -->
-  <script src='./dependencies/review-buttons.js'></script>
+    <script src="./scripts/listeners/listeners.js"></script>
+    <script src='./dependencies/review-buttons.js'></script>
 </body>
 
 </html>
