@@ -14,55 +14,129 @@ const expect = chai.expect;
 const findMatches = (wordToMatch, array) => {
     return array.filter(str => {
         const regex = new RegExp(wordToMatch, 'gi');
-        return str.match(regex)
+        return str.city.match(regex) || str.state.match(regex)
     })
 }
+
+const testArr = [{
+    city: "New York",
+    state: "New York"
+}, {
+    city: "Los Angeles",
+    state: "California"
+}, {
+    city: "Chicago",
+    state: "Illinois"
+}, {
+    city: "Philadelphia",
+    state: "Pennsylvania"
+}, {
+    city: "Memphis",
+    state: "Tennessee"
+}, {
+    city: "Boston",
+    state: "Massachusets"
+}]
 
 
 
 
 // write only one top-level describe in this file
-describe('findMatches: searches for the strings that matches with search parameter in an array', () => {
+describe('findMatches: searches for the strings that matches with search parameter in an array of objects', () => {
     // write as many nested describes as you would like
     describe('findMatches: returns all strings those include search parameter', () => {
         // write as many it's as you want in each describe
         it('can make search for empty strings and returns the whole array', () => {
             // have only one assertion inside each it
-            const fruits = ['tomato', 'orange', 'apple', 'pear', 'Banana', 'GRAPE', 'MelloN'];
-            const expected = ['tomato', 'orange', 'apple', 'pear', 'Banana', 'GRAPE', 'MelloN'];
-            const actual = findMatches('', fruits)
-            expect(expected).to.eql(actual)
+
+            const expected = [{
+                city: "New York",
+                state: "New York"
+            }, {
+                city: "Los Angeles",
+                state: "California"
+            }, {
+                city: "Chicago",
+                state: "Illinois"
+            }, {
+                city: "Philadelphia",
+                state: "Pennsylvania"
+            }, {
+                city: "Memphis",
+                state: "Tennessee"
+            }, {
+                city: "Boston",
+                state: "Massachusets"
+            }];
+            const actual = findMatches('', testArr)
+            expect(actual).to.have.deep.members(expected)
         });
         it('can make search for single letters and returns an array of strings containing this letter', () => {
-            const fruits = ['tomato', 'orange', 'apple', 'pear', 'Banana', 'GRAPE', 'MelloN'];
-            const expected = ['tomato', 'orange', 'MelloN'];
-            const actual = findMatches('o', fruits);
-            expect(expected).to.have.members(actual);
+
+            const expected = [{
+                city: "Los Angeles",
+                state: "California"
+            }, {
+                city: "Chicago",
+                state: "Illinois"
+            }, {
+                city: "Philadelphia",
+                state: "Pennsylvania"
+            }, ];
+            const actual = findMatches('l', testArr);
+            expect(actual).to.have.deep.members(expected);
         });
         it('can make search for syllables and returns an array of strings containing this syllable', () => {
             // have only one assertion inside each it
-            const fruits = ['tomato', 'orange', 'apple', 'pear', 'Banana', 'GRAPE', 'MelloN'];
-            const expected = ['orange', 'Banana'];
-            const actual = findMatches('an', fruits)
-            expect(expected).to.eql(actual)
+
+            const expected = [{
+                city: "Los Angeles",
+                state: "California"
+            }, {
+                city: "Philadelphia",
+                state: "Pennsylvania"
+            }, ];
+            const actual = findMatches('an', testArr)
+            expect(actual).to.eql(expected)
         });
         it('can make search for multiple words and returns array of strings containing this words', () => {
             // have only one assertion inside each it
-            const fruits = ['red tomato', 'orange orange', 'green apple', 'yellow pear', 'yellow Banana', 'Purple GRAPE', 'Green MelloN'];
-            const expected = ['red tomato'];
-            const actual = findMatches('red tom', fruits)
-            expect(expected).to.eql(actual)
+
+            const expected = [{
+                city: "Los Angeles",
+                state: "California"
+            }, ];
+            const actual = findMatches('Los Angeles', testArr)
+            expect(actual).to.eql(expected)
         });
         it('can make searches regardless of case sensitivity', () => {
             // have only one assertion inside each it
-            const fruits = ['tomato', 'orange', 'apple', 'pear', 'Banana', 'GRAPE', 'MelloN'];
-            const expected = ['GRAPE'];
-            const actual = findMatches('gr', fruits)
-            expect(expected).to.eql(actual)
+
+            const expected = [{
+                city: "Chicago",
+                state: "Illinois"
+            }, ];
+            const actual = findMatches('CHI', testArr)
+            expect(actual).to.eql(expected)
+        });
+
+        it('can make searches by state name or city name', () => {
+            // have only one assertion inside each it
+
+            const expected = [{
+                city: "Los Angeles",
+                state: "California"
+            }, ];
+            const actual = findMatches('California', testArr)
+            expect(actual).to.eql(expected)
         });
     });
 });
 
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
 /* logic functions are pure functions
 
   NEVER read from the DOM
